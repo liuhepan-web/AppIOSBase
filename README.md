@@ -47,25 +47,19 @@ source 'https://cdn.cocoapods.org/'
 platform :ios, '13.0'
 
 target 'NewDemo' do
-  # 1) 安全 SDK（涂鸦平台下载 ios_core_sdk.tar.gz，解压到 Podfile 同级目录）
+  # 1) 安全 SDK（涂鸦平台下载 ios_core_sdk.tar.gz，解压到 Podfile 同级目录，必带）
   pod "ThingSmartCryption", :path => './'
 
-  # 2) 基础 + 业务拓展 SDK（v7.8.0）
-  pod "ThingSmartHomeKit", "~> 7.8.0"
-  pod "ThingSmartBusinessExtensionKit", "~> 7.8.0"
-
-  # 3) 业务包核心（启动业务包 / 协议）
-  pod "ThingSmartBizCore"
-  pod "ThingModuleServices"
-
-  # 4) 你用到的业务包（按需求增删；AppIOSBase 内部用到：小程序 / 面板 / 设备 / 配网）
-  pod "ThingSmartMiniAppBizBundle", "~> 7.8.0"
-  pod "ThingSmartPanelBizBundle", "~> 7.8.0"
-  pod "ThingSmartDeviceKitBizBundle", "~> 7.8.0"
-  pod "ThingSmartActivatorBizBundle", "~> 7.8.0"
-
-  # 5) 复用 AppIOSBase（一行引用，非本地）
+  # 2) 一行引用基础库（必带，也是唯一要写的库）：
+  #    HomeKit / BusinessExtensionKit / BizCore / ModuleServices / DeviceKit /
+  #    PanelBizBundle 会由 podspec 自动带入，不要手写、也不要再加业务包。
+  #    登录 / 注册 / 设备列表开箱即用。
   pod 'AppIOSBase', :git => 'https://github.com/liuhepan-web/AppIOSBase.git', :tag => '0.2.0'
+
+  # 3) 其他业务包【按需】：只有你要用对应功能时才加，不需要就一行都不要写。
+  #    打开小程序:  pod "ThingSmartMiniAppBizBundle", "~> 7.8.0"
+  #    扫码配网:    pod "ThingSmartActivatorBizBundle", "~> 7.8.0"
+  #    家庭设置:    pod "ThingSmartFamilyBizBundle", "~> 7.8.0"
 end
 ```
 
