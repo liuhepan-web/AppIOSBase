@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'AppIOSBase'
-  s.version          = '0.3.0'
+  s.version          = '0.2.0'
   s.summary          = '涂鸦 App 基础能力库：注册/登录/家庭列表/切换家庭/设备列表/个人信息/退出登录'
   s.description      = <<-DESC
     AppIOSBase 把 App 通用基础能力收敛为自包含模块：SDK 初始化、注册、登录、
