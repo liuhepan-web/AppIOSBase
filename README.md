@@ -19,7 +19,7 @@ pod 'AppIOSBase', :path => './AppIOSBase'
 ### 方式二：Git（推荐给其他项目复用，非本地专属）
 把本 `AppIOSBase/` 目录推到独立 git 仓库后，他人在 Podfile 里：
 ```ruby
-pod 'AppIOSBase', :git => 'https://github.com/liuhepan-web/AppIOSBase.git', :tag => '0.3.0'
+pod 'AppIOSBase', :git => 'https://github.com/liuhepan-web/AppIOSBase.git', :tag => '0.2.0'
 ```
 然后执行 `pod install`。
 
@@ -57,7 +57,7 @@ target 'NewDemo' do
   #    HomeKit / BusinessExtensionKit / BizCore / ModuleServices / DeviceKit /
   #    PanelBizBundle 会由 podspec 自动带入，不要手写、也不要再加业务包。
   #    登录 / 注册 / 设备列表开箱即用。
-  pod 'AppIOSBase', :git => 'https://github.com/liuhepan-web/AppIOSBase.git', :tag => '0.3.0'
+  pod 'AppIOSBase', :git => 'https://github.com/liuhepan-web/AppIOSBase.git', :tag => '0.2.0'
 
   # 3) 其他业务包【按需】：只有你要用对应功能时才加，不需要就一行都不要写。
   #    打开小程序:  pod "ThingSmartMiniAppBizBundle", "~> 7.8.0"
