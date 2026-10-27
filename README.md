@@ -23,11 +23,12 @@ pod 'AppIOSBase', :git => 'https://github.com/liuhepan-web/AppIOSBase.git', :tag
 ```
 然后执行 `pod install`。
 
-> **本库只依赖基础 SDK（重构后只做登录/注册/SDK初始化/登录态）**：
+> **依赖分层**：
 > - **基础 SDK（必带）**：`ThingSmartHomeKit` + `ThingSmartBusinessExtensionKit`。
+> - **设备列表界面（库内自带，必带）**：`ThingSmartBizCore` + `ThingSmartDeviceKit` + `ThingSmartPanelBizBundle`。
 > - **安全 SDK `ThingSmartCryption`**：由宿主工程以 `:path => './'` 自行集成，**不**写进本库依赖。
-> - **业务包（设备面板 / 配网 / 小程序 / 家庭 等）**：本库不再包含相关界面，**由使用方在自己的 Podfile 里按需添加，没有需要就不添加**。
->   可参考同账号下的 `MiniPanelDemoIOS` 示例，其 `Features/` 已演示设备列表 / 家庭选择 / 配网 / 面板等界面如何接。
+> - **其他业务包（配网 / 小程序 / 家庭 / 媒体 等）**：本库未用到，**由使用方在自己的 Podfile 里按需添加，没有需要就不添加**。
+>   可参考同账号下的 `MiniPanelDemoIOS` 示例，其 `Features/` 演示家庭选择 / 配网 / 小程序等如何接。
 >   宿主 Podfile 需包含涂鸦 specs 源：`source 'https://github.com/tuya/tuya-pod-specs.git'`
 
 ## 在其他 Demo 中复用（一步引用）
@@ -35,8 +36,9 @@ AppIOSBase 已经是一个**独立、可跨工程复用**的 pod。新建任意 
 
 1. 在 Podfile 里加一行（方式二的 `:git` 引用）。
 2. 在 App 启动时调用 `Base.configure(...)` 初始化。
-3. 用 `Base.makeLoginViewController()` / `Base.makeRegisterViewController()` 拿登录注册页，监听 `.baseDidLogin` 切主页。
-   设备列表 / 家庭选择 / 配网 / 面板等业务包界面不在本库，请使用方集成对应业务包后自行实现。
+3. 用 `Base.makeLoginViewController()` / `Base.makeRegisterViewController()` 拿登录注册页、
+   `Base.makeDeviceListViewController()` 拿设备列表页，监听 `.baseDidLogin` 切主页。
+   家庭选择 / 配网 / 小程序等界面不在本库，请使用方集成对应业务包后自行实现。
 
 ### 新工程 Podfile（最小可用）
 ```ruby
@@ -81,9 +83,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 1) 初始化 Base（填入你自己的 AppKey / AppSecret）
         Base.configure(appKey: "你的AppKey", appSecret: "你的AppSecret")
 
-        // 2) 未登录 → 登录页；已登录 → 使用方自己的主页（需集成业务包）
+        // 2) 未登录 → 登录页；已登录 → 设备列表（或使用方自己的主页）
         let root = Base.isLoggedIn
-            ? UIViewController() /* 使用方自己的主页，需集成业务包 */
+            ? Base.makeDeviceListViewController()
             : Base.makeLoginViewController()
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = root
@@ -109,10 +111,11 @@ import AppIOSBase
 // App 启动时初始化一次
 Base.configure(appKey: "你的AppKey", appSecret: "你的AppSecret")
 
-// 登录 / 注册
+// 登录 / 注册 / 设备列表
 let login = Base.makeLoginViewController()      // 登录页
 let reg   = Base.makeRegisterViewController()   // 注册页
-// 设备列表 / 家庭选择 / 配网 / 面板等业务包界面由使用方集成业务包后自行实现
+let dev   = Base.makeDeviceListViewController() // 设备列表（点击进面板）
+// 家庭选择 / 配网 / 小程序等界面由使用方集成业务包后自行实现
 
 // 监听登录成功（App 层据此切换根控制器）
 NotificationCenter.default.addObserver(
@@ -122,8 +125,8 @@ NotificationCenter.default.addObserver(
 
 ## 对外 API
 - `Base`：`configure` / `isLoggedIn` / `currentHomeId` / `logout` /
-  `makeLoginViewController` / `makeRegisterViewController`
-- 设备列表 / 家庭选择 / 配网 / 设备面板等业务包界面**不在本库**，请使用方集成对应业务包后自行实现
+  `makeLoginViewController` / `makeRegisterViewController` / `makeDeviceListViewController`
+- 家庭选择 / 配网 / 小程序等界面**不在本库**，请使用方集成对应业务包后自行实现
   （参考 `MiniPanelDemoIOS` 示例的 `Features/`）。
 - `Notification.Name.baseDidLogin`：登录成功通知
 - `DemoConfig`：appKey / appSecret / appId / appScheme / sampleMiniAppId

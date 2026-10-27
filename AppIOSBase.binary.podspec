@@ -22,9 +22,13 @@ Pod::Spec.new do |s|
   # 二进制分发：只暴露 xcframework，不再带源码
   s.vendored_frameworks = 'AppIOSBase.xcframework'
 
-  # 依赖仅基础 SDK（与源码 pod 一致）。业务包（设备面板/配网/小程序/家庭等）
-  # 由使用方在自己的 Podfile 按需添加，未用到不添加。安全 SDK ThingSmartCryption
-  # 由宿主工程以 :path => './' 自行集成，不写进 podspec。
+  # 依赖与源码 pod 一致：基础 SDK + 设备列表界面所需（BizCore/ModuleServices/DeviceKit/PanelBizBundle）。
+  # 其他业务包（配网/小程序/家庭等）由使用方在自己的 Podfile 按需添加，未用到不添加。
+  # 安全 SDK ThingSmartCryption 由宿主工程以 :path => './' 自行集成，不写进 podspec。
   s.dependency 'ThingSmartHomeKit', '~> 7.8.0'
   s.dependency 'ThingSmartBusinessExtensionKit', '~> 7.8.0'
+  s.dependency 'ThingSmartBizCore'
+  s.dependency 'ThingModuleServices'
+  s.dependency 'ThingSmartDeviceKit'
+  s.dependency 'ThingSmartPanelBizBundle', '~> 7.8.0'
 end

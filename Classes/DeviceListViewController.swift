@@ -1,7 +1,13 @@
 import UIKit
+import ThingSmartBizCore
+import ThingSmartDeviceKit
+import ThingSmartPanelBizBundle
+import ThingModuleServices
 
 /// 设备列表 / 设备控制页：对应 Android 的 DemoDeviceListActivity。
 /// 列出当前家庭下的设备，点击进入设备面板（RN / 小程序面板），侧滑可移除设备。
+/// 所需依赖：ThingSmartBizCore（服务查找）+ ThingSmartPanelBizBundle（打开面板）+
+/// ThingSmartDeviceKit（设备模型 / 设备操作），已在 podspec 中声明。
 final class DeviceListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     private var devices: [ThingSmartDeviceModel] = []

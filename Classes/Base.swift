@@ -45,4 +45,5 @@ public enum Base {
 
     public static func makeLoginViewController() -> UIViewController { LoginViewController() }
     public static func makeRegisterViewController() -> UIViewController { RegisterViewController() }
+    public static func makeDeviceListViewController() -> UIViewController { DeviceListViewController() }
 }

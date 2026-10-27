@@ -1,11 +1,11 @@
 Pod::Spec.new do |s|
   s.name             = 'AppIOSBase'
   s.version          = '0.2.0'
-  s.summary          = '涂鸦 App 基础能力库：SDK 初始化 / 注册 / 登录 / 登录态'
+  s.summary          = '涂鸦 App 基础能力库：SDK 初始化 / 注册 / 登录 / 设备列表'
   s.description      = <<-DESC
-    AppIOSBase 把最基础的「账户」能力（SDK 初始化、注册、登录、登录态与当前家庭存储）
-    收敛为自包含模块。新工程只需 Podfile 加一行引用即可复用，无需重写。
-    设备列表 / 家庭选择 / 配网 / 设备面板等业务包界面不在本库，由使用方按需集成业务包后自行实现。
+    AppIOSBase 把基础能力（SDK 初始化、注册、登录、登录态存储、设备列表）收敛为自包含模块。
+    新工程只需 Podfile 加一行引用即可复用，无需重写。
+    家庭选择 / 配网 / 小程序等界面不在本库，由使用方按需集成业务包后自行实现。
   DESC
   s.homepage         = 'https://github.com/liuhepan-web/AppIOSBase'
   s.license          = { :type => 'MIT' }
@@ -23,12 +23,18 @@ Pod::Spec.new do |s|
   s.static_framework = true
 
   # ============================================================================
-  # 依赖：仅基础 SDK（重构后 AppIOSBase 只做 登录/注册/SDK初始化/登录态）
-  # - 基础 SDK（必带）：ThingSmartHomeKit（账户/家庭/设备等核心 API）+ BusinessExtensionKit。
-  # - 安全 SDK ThingSmartCryption：由各宿主工程以 :path => './' 自行集成，不写进 podspec。
-  # - 业务包（设备面板 / 配网 / 小程序 / 家庭 等）：本库不再包含相关界面，
-  #   由使用方在自己的 Podfile 里【按需】添加，没有需要就不添加。
+  # 依赖分层：
+  # - 基础 SDK（必带）：ThingSmartHomeKit（账户/家庭核心 API）+ BusinessExtensionKit。
+  # - 设备列表界面所需（Base.makeDeviceListViewController）：BizCore（服务查找）+
+  #   ModuleServices（ThingPanelProtocol 定义处）+ DeviceKit（设备模型/设备操作）+
+  #   PanelBizBundle（运行时提供面板实现）。
+  # - 安全 SDK ThingSmartCryption：由宿主工程以 :path => './' 自行集成，不写进 podspec。
+  # - 其他业务包（配网 / 小程序 / 家庭 / 媒体 等）：本库未用到，由使用方【按需】添加。
   # ============================================================================
   s.dependency 'ThingSmartHomeKit', '~> 7.8.0'
   s.dependency 'ThingSmartBusinessExtensionKit', '~> 7.8.0'
+  s.dependency 'ThingSmartBizCore'
+  s.dependency 'ThingModuleServices'
+  s.dependency 'ThingSmartDeviceKit'
+  s.dependency 'ThingSmartPanelBizBundle', '~> 7.8.0'
 end
