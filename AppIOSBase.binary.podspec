@@ -5,7 +5,7 @@
 # ============================================================================
 Pod::Spec.new do |s|
   s.name             = 'AppIOSBase'
-  s.version          = '0.3.0'
+  s.version          = '0.2.0'
   s.summary          = '涂鸦 App 基础能力库（二进制分发 / XCFramework）'
   s.description      = <<-DESC
     AppIOSBase 的二进制形态（XCFramework），通过私有 CocoaPods specs 仓库分发，
