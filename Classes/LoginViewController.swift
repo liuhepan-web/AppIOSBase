@@ -220,8 +220,7 @@ final class LoginViewController: UIViewController {
             } else {
                 DemoCurrentHomeStore.clearLoginCredentials()
             }
-            // 登录成功后务必刷新业务包缓存
-            ThingSmartBizCore.sharedInstance().updateConfig()
+            // 登录成功。业务包缓存刷新由使用方在监听到 .baseDidLogin 后处理（见 Demo AppDelegate）
             self.enterHub()
         }
         let failure: (Error?) -> Void = { [weak self] error in

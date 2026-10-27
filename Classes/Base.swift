@@ -17,8 +17,6 @@ public enum Base {
     public static func configure(appKey: String, appSecret: String) {
         ThingSmartSDK.sharedInstance().start(withAppKey: appKey, secretKey: appSecret)
         ThingSmartBusinessExtensionConfig.setupConfig()
-        ThingSmartBizCore.sharedInstance().registerService(ThingFamilyProtocol.self,
-                                                           withInstance: FamilyService.shared)
     }
 
     /// 是否已登录
@@ -47,6 +45,4 @@ public enum Base {
 
     public static func makeLoginViewController() -> UIViewController { LoginViewController() }
     public static func makeRegisterViewController() -> UIViewController { RegisterViewController() }
-    public static func makeHomePickerViewController() -> UIViewController { HomePickerViewController() }
-    public static func makeDeviceListViewController() -> UIViewController { DeviceListViewController() }
 }

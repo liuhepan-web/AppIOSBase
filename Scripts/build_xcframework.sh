@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ============================================================================
-# 把 MiniPanelBase 源码 pod 打包成 XCFramework（device + simulator 双架构）。
+# 把 AppIOSBase 源码 pod 打包成 XCFramework（device + simulator 双架构）。
 # 这是 iOS 上「aar + Maven」的等价做法：只分发二进制，不暴露源码。
 #
 # 前置条件（在 Mac 上执行，沙箱内无法跑完整 archive）：
@@ -8,15 +8,15 @@
 #   - CocoaPods，且装好 cocoapods-gen 插件：  gem install cocoapods-gen
 #
 # 用法：
-#   cd MiniPanelBase
+#   cd AppIOSBase
 #   bash Scripts/build_xcframework.sh
 #
-# 产出：./MiniPanelBase.xcframework
+# 产出：./AppIOSBase.xcframework
 # ============================================================================
 set -e
 
 cd "$(dirname "$0")/.."
-POD_NAME="MiniPanelBase"
+POD_NAME="AppIOSBase"
 DERIVED="./build"
 
 echo "==> 1) 用 pod gen 生成单 pod 工程（含源码与依赖）"
