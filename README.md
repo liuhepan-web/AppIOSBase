@@ -1,6 +1,6 @@
 # AppIOSBase
 
-涂鸦 App 基础能力库（注册 / 登录 / 配网 / 家庭 / 设备列表），**可跨工程复用的 CocoaPod**。
+涂鸦 App 基础能力库（注册 / 登录 / 家庭列表与切换 / 设备列表 / 个人信息 / 退出登录），**可跨工程复用的 CocoaPod**。
 源码独立于宿主 App，不在宿主工程内 —— 推到 git 后，别人下载即可用一行 Podfile 引用。
 
 ## 特点
@@ -23,9 +23,13 @@ pod 'AppIOSBase', :git => 'https://github.com/liuhepan-web/AppIOSBase.git', :tag
 ```
 然后执行 `pod install`。
 
+> **SDK 版本要求**：涂鸦 iOS SDK **7.11.0**（`~> 7.11.0`），最低部署目标 **iOS 14**
+> （v7.11.0 起 UI 业务包官方要求 iOS 14）。使用方 Podfile 若仍写 `~> 7.8.0` 会与本库依赖冲突，需同步升级。
+>
 > **依赖（无任何面板 / 小程序 / 配网业务包）**：
-> - **基础 SDK**：`ThingSmartHomeKit` + `ThingSmartBusinessExtensionKit`。
+> - **基础 SDK**：`ThingSmartHomeKit` + `ThingSmartBusinessExtensionKit`（均 `~> 7.11.0`）。
 > - **家庭 / 设备能力**：`ThingSmartBizCore`（家庭切换 + 家庭协议自动注册）+ `ThingModuleServices`（协议定义）+ `ThingSmartDeviceKit`（设备列表）。
+>   这三个是独立版本线（实测 5.15.0 / 4.77.1 / 5.16.0，没有 7.11.x），**不要手动钉 7.11.0**，由业务包依赖约束自动解析。
 > - **安全 SDK `ThingSmartCryption`**：由宿主工程以 `:path => './'` 自行集成，**不**写进本库依赖。
 > - **其他业务包（配网 / 小程序 / 媒体 等）**：本库未用到，**由使用方在自己的 Podfile 里按需添加，没有需要就不添加**。
 >   宿主 Podfile 需包含涂鸦 specs 源：`source 'https://github.com/tuya/tuya-pod-specs.git'`
@@ -47,7 +51,7 @@ AppIOSBase 已经是一个**独立、可跨工程复用**的 pod。新建任意 
 ```ruby
 source 'https://github.com/tuya/tuya-pod-specs.git'
 source 'https://cdn.cocoapods.org/'
-platform :ios, '13.0'
+platform :ios, '14.0'
 
 target 'NewDemo' do
   # 1) 安全 SDK（涂鸦平台下载 ios_core_sdk.tar.gz，解压到 Podfile 同级目录，必带）
@@ -60,9 +64,9 @@ target 'NewDemo' do
   pod 'AppIOSBase', :git => 'https://github.com/liuhepan-web/AppIOSBase.git', :tag => '0.2.0'
 
   # 3) 其他业务包【按需】：只有你要用对应功能时才加，不需要就一行都不要写。
-  #    打开小程序:  pod "ThingSmartMiniAppBizBundle", "~> 7.8.0"
-  #    扫码配网:    pod "ThingSmartActivatorBizBundle", "~> 7.8.0"
-  #    家庭设置:    pod "ThingSmartFamilyBizBundle", "~> 7.8.0"
+  #    打开小程序:  pod "ThingSmartMiniAppBizBundle", "~> 7.11.0"
+  #    扫码配网:    pod "ThingSmartActivatorBizBundle", "~> 7.11.0"
+  #    家庭设置:    pod "ThingSmartFamilyBizBundle", "~> 7.11.0"
 end
 ```
 

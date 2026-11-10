@@ -16,7 +16,8 @@ Pod::Spec.new do |s|
   s.license          = { :type => 'MIT' }
   s.author           = { 'liuhepan' => 'liuhepan-web@users.noreply.github.com' }
   s.source           = { :git => 'https://github.com/liuhepan-web/AppIOSBase.git', :tag => s.version.to_s }
-  s.ios.deployment_target = '13.0'
+  # v7.11.0 起涂鸦 UI 业务包最低支持 iOS 14，与源码 pod 一致。
+  s.ios.deployment_target = '14.0'
   s.swift_version    = '5.0'
   s.static_framework = true
 
@@ -26,8 +27,8 @@ Pod::Spec.new do |s|
   # 依赖与源码 pod 一致：基础 SDK + 家庭/设备能力（无任何面板业务包）。
   # 其他业务包（配网/小程序等）由使用方在自己的 Podfile 按需添加，未用到不添加。
   # 安全 SDK ThingSmartCryption 由宿主工程以 :path => './' 自行集成，不写进 podspec。
-  s.dependency 'ThingSmartHomeKit', '~> 7.8.0'
-  s.dependency 'ThingSmartBusinessExtensionKit', '~> 7.8.0'
+  s.dependency 'ThingSmartHomeKit', '~> 7.11.0'
+  s.dependency 'ThingSmartBusinessExtensionKit', '~> 7.11.0'
   s.dependency 'ThingSmartBizCore'
   s.dependency 'ThingModuleServices'
   s.dependency 'ThingSmartDeviceKit'

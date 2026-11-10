@@ -16,7 +16,8 @@ Pod::Spec.new do |s|
   # 使用者在 Podfile 里用 :git 引用时会覆盖此处；本地 Demo 用 :path 引用时忽略此项。
   s.source           = { :git => 'https://github.com/liuhepan-web/AppIOSBase.git', :tag => s.version.to_s }
 
-  s.ios.deployment_target = '13.0'
+  # v7.11.0 起涂鸦 UI 业务包最低支持 iOS 14（官方 changelog），基础库同步对齐。
+  s.ios.deployment_target = '14.0'
   s.swift_version    = '5.0'
   s.source_files     = 'Classes/**/*.{swift}'
 
@@ -32,8 +33,8 @@ Pod::Spec.new do |s|
   # - ThingSmartDeviceKit：设备列表的设备模型与设备操作。
   # - 安全 SDK ThingSmartCryption：由宿主工程以 :path => './' 自行集成。
   # ============================================================================
-  s.dependency 'ThingSmartHomeKit', '~> 7.8.0'
-  s.dependency 'ThingSmartBusinessExtensionKit', '~> 7.8.0'
+  s.dependency 'ThingSmartHomeKit', '~> 7.11.0'
+  s.dependency 'ThingSmartBusinessExtensionKit', '~> 7.11.0'
   s.dependency 'ThingSmartBizCore'
   s.dependency 'ThingModuleServices'
   s.dependency 'ThingSmartDeviceKit'
